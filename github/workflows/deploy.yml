@@ -1,0 +1,34 @@
+name: Deploy Go Backend
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.17
+
+    - name: Build Go Application
+      run: go build -o myapp
+
+    - name: Deploy to GitHub Pages
+      run: |
+        mkdir deploy
+        cp myapp deploy/
+        cd deploy
+        git init
+        git config user.name "${{ github.actor }}"
+        git config user.email "${{ github.actor }}@users.noreply.github.com"
+        git add .
+        git commit -m "Deploy Go Backend"
+        git push --force "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" main:gh-pages
