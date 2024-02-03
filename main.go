@@ -13,9 +13,8 @@ import (
 func main() {
 	router := gin.Default()
 	router.GET("/resume", getResume)
-	router.Run("localhost:8080")
+	router.Run()
 }
-
 func getResume(c *gin.Context) {
 	var resume types.Resume
 
