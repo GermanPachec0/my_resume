@@ -18,7 +18,7 @@ func main() {
 func getResume(c *gin.Context) {
 	var resume types.Resume
 
-	yamlData, err := os.ReadFile("resume.yml")
+	yamlData, err := os.ReadFile("./resume.yml")
 	if err != nil {
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
